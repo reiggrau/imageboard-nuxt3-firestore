@@ -9,7 +9,7 @@ export default {
         return {
             images: [[], [], []],
             imageIndex: 3,
-            oldestId: 0,
+            oldestImage: null,
             selectedPhotoId: null,
         };
     },
@@ -28,10 +28,13 @@ export default {
     mounted() {
         $fetch("/api/newest_images").then((data) => {
             console.log("useFetch data :", data);
-            this.oldestId = data[0].id;
+            const imageArr = data;
 
-            for (let image of data) {
-                this.images[this.imageIndex % 3].unshift(image);
+            this.oldestImage = imageArr[imageArr.length - 1].created_at;
+            console.log("oldestImage title :", imageArr[imageArr.length - 1].title, " created_at :", this.oldestImage);
+
+            for (let image of imageArr) {
+                this.images[this.imageIndex % 3].push(image);
                 this.imageIndex++;
             }
         });

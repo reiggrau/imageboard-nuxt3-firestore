@@ -7,14 +7,15 @@ export default {
         return {
             selectedPhoto: {
                 id: "",
+                user_id: "",
+                user: "test",
                 url: "url",
-                username: "username",
                 title: "title",
                 description: "description",
                 tags: "tags",
-                created_at: "created_at",
                 likes: "0",
                 comments: "0",
+                created_at: "created_at",
             },
             commentsShown: false,
         };
@@ -32,7 +33,10 @@ export default {
         console.log("PhotoSelect mounted(). this.selectedPhotoId :", this.selectedPhotoId);
 
         $fetch(`/api/image/` + id).then((data) => {
-            this.selectedPhoto = data;
+            console.log("data :", data);
+            if (data) {
+                this.selectedPhoto = data;
+            }
         });
     },
 };

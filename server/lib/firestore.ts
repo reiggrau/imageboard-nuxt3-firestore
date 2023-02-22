@@ -3,7 +3,7 @@ import { firestoreDB } from "./firebase";
 
 // OWN CODE
 
-const getNewestImages = async () => {
+export const getNewestImages = async () => {
     const docQuery = query(collection(firestoreDB, "images"), orderBy("created_at", "desc"), limit(6));
 
     const querySnap = await getDocs(docQuery);
@@ -17,6 +17,8 @@ const getNewestImages = async () => {
             title,
             description,
             tags,
+            likes,
+            comments,
             created_at,
         };
     });
@@ -24,7 +26,7 @@ const getNewestImages = async () => {
     return data;
 };
 
-const getImageById = async (id: string) => {
+export const getImageById = async (id: string) => {
     console.log("getImageById id:", id);
 
     const docRef = doc(firestoreDB, "images", id);
@@ -45,6 +47,39 @@ const getImageById = async (id: string) => {
             comments,
             created_at,
         };
+    } else {
+        return undefined;
+    }
+};
+
+export const getMoreImages = async (id: string) => {
+    console.log("getMoreImages id:", id);
+
+    const docRef = doc(firestoreDB, "images", id);
+
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+        const docQuery = query(collection(firestoreDB, "images"), where("created_at", "<", docSnap.data().created_at), orderBy("created_at", "desc"), limit(6));
+
+        const querySnap = await getDocs(docQuery);
+
+        const data = Array.from(querySnap.docs).map((doc) => {
+            const { user_id, url, title, description, tags, created_at, likes, comments } = doc.data();
+            return {
+                id: doc.id,
+                user_id,
+                url,
+                title,
+                description,
+                tags,
+                likes,
+                comments,
+                created_at,
+            };
+        });
+
+        return data;
     } else {
         return undefined;
     }

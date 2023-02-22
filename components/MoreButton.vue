@@ -1,31 +1,27 @@
 <script>
 export default {
-  name: "MoreButton",
+    name: "MoreButton",
 
-  data() {
-    return {
-      moreButton: true,
-    };
-  },
+    data() {
+        return {};
+    },
 
-  methods: {},
-  components: {},
+    methods: {},
+    components: {},
 };
 </script>
 
 <template>
-  <h3 @click="moreImages" v-if="moreButton" id="moreBtn" class="button">
-    More
-  </h3>
+    <h3 @click="$emit('more-photos')" id="moreBtn" class="button">More</h3>
 </template>
 
 <style scoped>
 #moreBtn {
-  cursor: pointer;
-  color: grey;
+    cursor: pointer;
+    color: grey;
 }
 
 #moreBtn:hover {
-  color: black;
+    color: black;
 }
 </style>

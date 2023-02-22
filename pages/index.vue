@@ -35,10 +35,6 @@ export default {
         <main>
             <ImageBoard v-bind:userData="userData" />
         </main>
-
-        <footer>
-            <MoreButton />
-        </footer>
     </div>
 </template>
 

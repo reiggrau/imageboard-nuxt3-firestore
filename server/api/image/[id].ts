@@ -1,4 +1,4 @@
-import fb from "../../lib/firestore";
+import { getImageById } from "../../lib/firestore";
 
 export default defineEventHandler(async (event) => {
     const id = String(event.context.params?.id);
@@ -6,7 +6,7 @@ export default defineEventHandler(async (event) => {
     try {
         console.log("event.node.req.url :", event.node.req.url);
 
-        const data = await fb.getImageById(id);
+        const data = await getImageById(id);
 
         if (data) {
             return data;

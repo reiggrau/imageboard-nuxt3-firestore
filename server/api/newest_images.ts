@@ -1,10 +1,10 @@
-import fb from "../lib/firestore";
+import { getNewestImages } from "../lib/firestore";
 
 export default defineEventHandler(async (event) => {
     try {
         console.log("event.node.req.url :", event.node.req.url);
 
-        const data = await fb.getNewestImages();
+        const data = await getNewestImages();
 
         return data;
     } catch (error: any) {
